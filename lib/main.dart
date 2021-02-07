@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'dart:convert';
+import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sake_api/req_sake.dart';
+import 'package:sake_api/footer.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,15 +17,15 @@ class MyApp extends StatelessWidget {
         darkTheme: ThemeData.dark(),
         initialRoute: '/',
         routes: <String, WidgetBuilder>{
-          '/': (BuildContext context) => _PostsListScreenState(title: 'sakenowa api'),
+          '/': (BuildContext context) => TopScreenState(title: 'sakenowa api'),
           BreweryPage.routeName: (BuildContext context) => BreweryPage(),
           BrandPage.routeName: (BuildContext context) => BrandPage()
         });
   }
 }
 
-class _PostsListScreenState extends StatelessWidget {
-  _PostsListScreenState({Key key, this.title}) : super(key: key);
+class TopScreenState extends StatelessWidget {
+  TopScreenState({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -32,17 +34,27 @@ class _PostsListScreenState extends StatelessWidget {
     return ChangeNotifierProvider<Breweries>(
         create: (context) => Breweries(),
         child: Scaffold(
-            appBar: AppBar(
-              title: Text(title),
-            ),
-            body: Container(
-              padding: EdgeInsets.all(10),
-              child: PostsListWidget(),
-            )));
+          appBar: AppBar(
+            title: Text(title),
+            actions: <Widget>[
+              FlatButton.icon(
+                //padding: EdgeInsets.all(4.0),
+                onPressed: () => js.context.callMethod('open', ['https://sakenowa.com/']),
+                icon: Icon(Icons.content_copy),
+                label: Text('さけのわ'),
+              )
+            ],
+          ),
+          body: Container(
+            padding: EdgeInsets.all(10),
+            child: BreweryListWidget(),
+          ),
+          //bottomNavigationBar: Footer(),
+        ));
   }
 }
 
-class PostsListWidget extends StatelessWidget {
+class BreweryListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final breweries = Provider.of<Breweries>(context, listen: false).breweriesRepositories();
