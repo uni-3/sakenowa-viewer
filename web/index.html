@@ -16,6 +16,15 @@
 
   <title>sake_api</title>
   <link rel="manifest" href="manifest.json">
+  <script>
+    if (typeof window.MemoryInfo == "undefined") {
+      if (typeof window.performance.memory != "undefined") {
+        window.MemoryInfo = function () {};
+        window.MemoryInfo.prototype = window.performance.memory.__proto__;
+      }
+    }
+  </script>
+
 </head>
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
