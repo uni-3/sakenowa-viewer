@@ -2,6 +2,8 @@
 
 test for api request and render data.
 
+web
+https://uni-3.github.io/sakenowa-viewer/#/
 
 ## sakenowa
 https://sakenowa.com/
