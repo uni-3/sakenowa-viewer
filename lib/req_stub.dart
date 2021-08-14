@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class Post {
-  int userId;
-  int id;
-  String title;
-  String body;
+  int userId = 0;
+  int id = 0;
+  String title = "";
+  String body = "";
 
   Post(this.userId, this.id, this.title, this.body);
 
@@ -46,7 +46,7 @@ const stubPostsResponse = '''
 ''';
 
 class SampleService extends http.BaseClient {
-  static SampleService _instance;
+  static SampleService? _instance;
 
   final _inner = http.Client();
 
@@ -76,7 +76,7 @@ class SampleService extends http.BaseClient {
       return Future.delayed(const Duration(seconds: 5), () => res);
     } else {
       // APIサーバアクセス
-      final url = 'https://jsonplaceholder.typicode.com/posts';
+      final url = Uri.parse('https://jsonplaceholder.typicode.com/posts');
       return get(url);
     }
   }

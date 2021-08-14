@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 }
 
 class TopScreenState extends StatelessWidget {
-  TopScreenState({Key key, this.title}) : super(key: key);
+  TopScreenState({Key? key, this.title = "title"}) : super(key: key);
 
   final String title;
 
@@ -37,7 +37,7 @@ class TopScreenState extends StatelessWidget {
           appBar: AppBar(
             title: Text(title),
             actions: <Widget>[
-              FlatButton.icon(
+              TextButton.icon(
                 //padding: EdgeInsets.all(4.0),
                 onPressed: () => js.context.callMethod('open', ['https://sakenowa.com/']),
                 icon: Icon(Icons.content_copy),
@@ -79,7 +79,8 @@ class BreweryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LinkArguments args = ModalRoute.of(context).settings.arguments;
+    final args = ModalRoute.of(context)!.settings.arguments;
+    args as LinkArguments;
     final id = args.id;
     final title = args.title;
     return ChangeNotifierProvider<Brands>(
@@ -96,7 +97,7 @@ class BreweryPage extends StatelessWidget {
 }
 
 class BrandListWidget extends StatelessWidget {
-  BrandListWidget({Key key, this.breweryId}) : super(key: key);
+  BrandListWidget({Key? key, required this.breweryId}) : super(key: key);
 
   final int breweryId;
 
@@ -126,7 +127,8 @@ class BrandPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LinkArguments args = ModalRoute.of(context).settings.arguments;
+    final args = ModalRoute.of(context)!.settings.arguments;
+    args as LinkArguments;
     final id = args.id;
     final title = args.title;
     return ChangeNotifierProvider<Flavorcharts>(
@@ -143,7 +145,7 @@ class BrandPage extends StatelessWidget {
 }
 
 class BrandWidget extends StatelessWidget {
-  BrandWidget({Key key, this.brandId}) : super(key: key);
+  BrandWidget({Key? key, required this.brandId}) : super(key: key);
 
   final int brandId;
 
@@ -170,7 +172,7 @@ class BrandWidget extends StatelessWidget {
 }
 
 class flavorchartWidget extends StatelessWidget {
-  flavorchartWidget({Key key, this.flavor}) : super(key: key);
+  flavorchartWidget({Key? key, required this.flavor}) : super(key: key);
 
   final FlavorchartsRepository flavor;
 
@@ -196,7 +198,7 @@ class LinkArguments {
 }
 
 class LinkWidget extends StatelessWidget {
-  LinkWidget({Key key, this.data, this.routeName}) : super(key: key);
+  LinkWidget({Key? key, required this.data, required this.routeName}) : super(key: key);
   final List data;
   final String routeName;
 

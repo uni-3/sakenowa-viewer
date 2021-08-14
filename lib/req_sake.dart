@@ -11,8 +11,8 @@ class BreweriesRepository {
   final String name;
   final int areaId;
 
-  // constructor
-  BreweriesRepository({this.id, this.name, this.areaId});
+  // corstructor
+  BreweriesRepository({required this.id, required this.name, required this.areaId});
   factory BreweriesRepository.fromJson(Map<String, dynamic> json) {
     return BreweriesRepository(id: json['id'], name: json['name'], areaId: json['areaId']);
   }
@@ -26,9 +26,10 @@ class Breweries with ChangeNotifier {
     return [..._list];
   }
 
-  //Future<List<BreweriesRepository>> breweriesRepositories() async {
-  Future<void> breweriesRepositories() async {
-    final response = await http.get('https://muro.sakenowa.com/sakenowa-data/api/breweries',
+  //Future<void> breweriesRepositories() async {
+  Future<List<BreweriesRepository>> breweriesRepositories() async {
+    var uri = Uri.parse('https://muro.sakenowa.com/sakenowa-data/api/breweries');
+    final response = await http.get(uri,
         headers: {"Accept": "application/json"});
     if (response.statusCode == 200) {
       Map<String, dynamic> decoded = json.decode(response.body);
@@ -59,13 +60,15 @@ class BrandsRepository {
 class Brands with ChangeNotifier {
   List<BrandsRepository> _list = [];
 
-  List<BrandsRepository> list;
+  late List<BrandsRepository> list;
   //List<BrandsRepository> get list {
   //  return [..._list];
   //}
 
-  Future<void> brandsRepositories([int breweryId]) async {
-    final response = await http.get('https://muro.sakenowa.com/sakenowa-data/api/brands');
+  //Future<void> brandsRepositories([int? breweryId]) async {
+  Future<List<BrandsRepository>> brandsRepositories([int? breweryId]) async {
+    var uri = Uri.parse('https://muro.sakenowa.com/sakenowa-data/api/brands');
+    final response = await http.get(uri);
     if (response.statusCode == 200) {
       //List<BrandsRepository> list = [];
       Map<String, dynamic> decoded = json.decode(response.body);
@@ -108,13 +111,15 @@ class FlavorchartsRepository {
 class Flavorcharts with ChangeNotifier {
   List<FlavorchartsRepository> _list = [];
 
-  List<FlavorchartsRepository> list;
+  late List<FlavorchartsRepository> list;
   //List<BrandsRepository> get list {
   //  return [..._list];
   //}
 
-  Future<void> flavorchartsRepositories([int brandId]) async {
-    final response = await http.get('https://muro.sakenowa.com/sakenowa-data/api/flavor-charts');
+  //Future<void> flavorchartsRepositories([int? brandId]) async {
+  Future<List<FlavorchartsRepository>> flavorchartsRepositories([int? brandId]) async {
+    var uri = Uri.parse('https://muro.sakenowa.com/sakenowa-data/api/flavor-charts');
+    final response = await http.get(uri);
     if (response.statusCode == 200) {
       Map<String, dynamic> decoded = json.decode(response.body);
       for (var item in decoded['flavorCharts']) {
