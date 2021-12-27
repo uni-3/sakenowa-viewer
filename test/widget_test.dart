@@ -27,4 +27,9 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
+
+  test("ex1", () {
+    var a = 10;
+    expect(a, 15);
+  });
 }
